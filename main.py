@@ -3,7 +3,7 @@
 
 
 from flask import Flask
-from config import Devconfig
+from config import DevConfig
 
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ app = Flask(__name__)
 因为这样可以加载 class DevConfig 的配置变量集合，
 而不需要一项一项的添加和修改。
 '''
-app.config.from_object(Devconfig)
+app.config.from_object(DevConfig)
 
 
 # 指定 URL='/' 的路由规则
