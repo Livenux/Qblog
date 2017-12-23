@@ -9,6 +9,13 @@ from main import app
 db = SQLAlchemy(app)
 
 
+posts_tags = db.Table(
+    'posts_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
+)
+
+
 class User(db.Model):
     """ Represents Proected Users."""
 
@@ -16,7 +23,7 @@ class User(db.Model):
     # Set the name for table
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255))
+    username = db.Column(db.String(64),unique=True)
     password = db.Column(db.String(255))
     # Establish contact with Post's ForeignKey: user_id
     posts = db.relationship(
@@ -42,12 +49,12 @@ class Post(db.Model):
 
     __tablename__='posts'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
+    title = db.Column(db.String(255), nullable=True)
     text = db.Column(db.Text())
     publish_date = db.Column(db.DateTime())
     #Set the foreign key for POst
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    # Establish contact with Comment;s ForeignKey: post_id
+    # Establish contact with Comments ForeignKey: post_id
     comments = db.relationship(
         'Comment',
         backref='posts',
@@ -95,13 +102,12 @@ class Tag(db.Model):
 
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Column(db.String(255)))
-
-
+    name = db.Column(db.String(32), unique=True)
+    
+    
     def __init__(self, name):
         self.name = name
 
 
     def __repr__(self):
         return "<Model Tag '{}'>".format(self.name)
-    
