@@ -7,7 +7,8 @@ from config import DevConfig
 
 
 app = Flask(__name__)
-#Import the views module
+
+# Import the views module
 views = __import__('views')
 
 
@@ -17,14 +18,6 @@ views = __import__('views')
 而不需要一项一项的添加和修改。
 '''
 app.config.from_object(DevConfig)
-
-
-# 指定 URL='/' 的路由规则
-# 当访问 HTTP://server_ip/ GET(Default) 时，call home()
-@app.route('/')
-def home():
-    return '<h1>Hello World!</h1>'
-
 
 if __name__ == '__main__':
     # Entry the application
